@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<style>
+    #customers {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #customers td, #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+    #customers tr:hover {background-color: #ddd;}
+
+    #customers th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #04AA6D;
+        color: white;
+
+    }
+
+</style>
+
+<body>
+
+<h1>Welcome to admin panel</h1>
+<table style="width: 100%" id="customers">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Role</th>
+        <th>Actions</th>
+
+    </tr>
+    </thead>
+    <tbody th:each="user : ${users}">
+    <tr >
+        <!--/*@thymesVar id="user" type="uz.pdp.website.entity.UserEntity"*/-->
+        <td th:text="${user.getName()}"/>
+        <td th:text="${user.getUsername()}"/>
+<!--        <td th:text="${user.getPassword()}"/>-->
+        <td th:text="${user.getUserRoles()}"/>
+        <td>
+            <form th:action="@{/admin/delete}">
+                <button type="submit"  th:name="id" th:value="${user.getId()}" style="font-size:20px"><i class="fa fa-trash-o"></i></button>
+            </form>
+            <a href="/edit_user">
+            <button>Update</button>
+            </a>
+
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+
+
+
+</body>
+</html>
