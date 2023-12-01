@@ -23,20 +23,9 @@ public class HomeController {
     public String ex(){
         return "example";
     }
-
-//    @GetMapping("/UserInformation")
-//    public String info(){
-//        return "update_user";
-//    }
-
-
     @GetMapping("/edit_user")
     public String update(){
         return "edit_user";
     }
-
-
-
-
 
 }

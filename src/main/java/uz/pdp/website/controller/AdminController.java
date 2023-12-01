@@ -35,23 +35,25 @@ public class AdminController {
         return "getAll";
     }
 
-    @GetMapping("/users/edit/{id}")
-    public String edit(@PathVariable UUID id, Model model){
-        model.addAttribute("users", userService.getbyId(id));
-        return "edit_user";
+    @GetMapping("/update/{id}")
+    public String edit(@PathVariable(value = "id") UUID id, Model model){
+        UserEntity user = userService.getbyId(id);
+        model.addAttribute("users", user);
+        return "getAll";
 
 
     }
 
-    @PostMapping("/users/{id}")
-    public String update(@PathVariable UUID id, @ModelAttribute UserRequestDto requestDto, Model model) {
+    @PostMapping("/update")
+    public String update(@RequestParam("id") UUID id,
+                         @RequestParam(value = "username") String username,
+                         @RequestParam(value = "password") String password, Model model )
+    {
+        userService.update(username, password, id);
         UserEntity user = userService.getbyId(id);
-        user.setId(id);
-        user.setName(requestDto.getName());
-        user.setUsername(requestDto.getUsername());
-        UserRequestDto userDto = modelMapper.map(user, UserRequestDto.class);
-        userService.update(userDto);
-        return "getAll";
+            model.addAttribute("users", user);
+            model.addAttribute("users", userService.getAllUsers());
+            return "getAll";
 
     }
 

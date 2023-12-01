@@ -36,6 +36,8 @@ public class SecurityConfig {
                 .loginPage("/auth/login")
                 .defaultSuccessUrl("/example")
                 .and()
+                .logout()
+                .and()
                 .build();
     }
 

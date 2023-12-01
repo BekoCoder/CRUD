@@ -8,11 +8,11 @@
 <h1>Update User</h1>
 
 <!--/*@thymesVar id="user" type="uz.pdp.website.entity.UserEntity"*/-->
-<form th:action="@{/users/{id} (id=${user.getId()})}" th:object="${user}">
-    <input type="text" name="name" placeholder="name">
+<form th:action="@{/admin/update}" th:object="${user}">
+    <input type="hidden" th:name="id" th:value="${user.getId()}" />
     <input type="text" name="username" placeholder="username" />
     <input type="password" name="password" placeholder="password" />
-    <button class="opacity">SUBMIT</button>
+    <button th:value="${user.getId()}" class="opacity">SUBMIT</button>
 </form>
 
 

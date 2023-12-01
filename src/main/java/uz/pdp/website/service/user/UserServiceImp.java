@@ -11,10 +11,11 @@ import uz.pdp.website.entity.enums.Role;
 import uz.pdp.website.exception.DataNotFoundException;
 import uz.pdp.website.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Service
+    @Service
 @RequiredArgsConstructor
 public class UserServiceImp implements UserService {
     private final UserRepository userRepository;
@@ -38,7 +39,12 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UserEntity getbyId(UUID id) {
-        return userRepository.findById(id).orElseThrow(() -> new DataNotFoundException("user not found"));
+            if(userRepository.findById(id).isPresent()){
+                return userRepository.findById(id).get();
+            }
+            else {
+throw new DataNotFoundException("user not found");
+            }
     }
 
     @Override
@@ -68,7 +74,7 @@ public class UserServiceImp implements UserService {
         UserEntity user = userRepository.findById(id).orElseThrow(() -> new DataNotFoundException("user not found"));
         try {
             user.setUsername(username);
-            user.setPassword(password);
+            user.setPassword(passwordEncoder.encode(password));
             userRepository.save(user);
         }
         catch (Exception e){
