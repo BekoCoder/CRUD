@@ -13,15 +13,17 @@
 <div class="wrapper">
     <ul>
         <li><a href="#">Home</a></li>
-        <li sec:authorize="hasRole('ADMIN')"><a href="/admin">Admin</a></li>
-        <li><a href="/UserInformation">Information</a></li>
-        <li><a href="#">Gallery</a></li>
+        <li sec:authorize="hasRole('ADMIN')"><a href="/admin/allUser">Users</a></li>
+        <li sec:authorize="hasRole('USER')"><a href="/user/myInfo">Information</a></li>
+        <li><a href="#">Feedback</a></li>
         <li><a href="/auth/login">Logout</a></li>
     </ul>
 </div>
 <div class="content">
-    <div class="title">
-        Fullscreen Overlay Navigation Bar</div>
+    <div class="title" sec:authorize="hasRole('ADMIN')">
+        Admin paneliga xush kelibsiz</div>
+    <div class="title" sec:authorize="hasRole('USER')">
+        User paneliga xush kelibsiz</div>
 
 </div>
 </body>

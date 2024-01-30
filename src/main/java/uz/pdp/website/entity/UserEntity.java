@@ -23,6 +23,9 @@ public class UserEntity extends BaseEntity implements UserDetails {
     private String name;
     private String username;
     private String password;
+    private String address;
+    private String direction;
+    private int  course;
     @Enumerated(value = EnumType.STRING)
     private List<Role> userRoles;
     @ManyToOne

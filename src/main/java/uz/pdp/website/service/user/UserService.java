@@ -11,6 +11,7 @@ public interface UserService extends BaseService<UserEntity, UserRequestDto> {
 
     UserEntity login(AuthDto auth);
     void update(String username, String password, UUID id);
-
+    void updateUserInfo(String address, String direction, int course, UUID id);
+    UserEntity myInfo(UUID id);
 
 }

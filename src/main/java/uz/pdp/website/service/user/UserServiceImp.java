@@ -13,9 +13,10 @@ import uz.pdp.website.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-    @Service
+@Service
 @RequiredArgsConstructor
 public class UserServiceImp implements UserService {
     private final UserRepository userRepository;
@@ -43,7 +44,7 @@ public class UserServiceImp implements UserService {
                 return userRepository.findById(id).get();
             }
             else {
-throw new DataNotFoundException("user not found");
+                throw new DataNotFoundException("user not found");
             }
     }
 
@@ -80,6 +81,32 @@ throw new DataNotFoundException("user not found");
         catch (Exception e){
         throw new DataNotFoundException("user does not exist");
         }
+    }
+
+    @Override
+    public void updateUserInfo(String address, String direction, int course, UUID id) {
+        UserEntity user = userRepository.findById(id).orElseThrow(() -> new DataNotFoundException("user not found"));
+        try {
+            user.setAddress(address);
+            user.setDirection(direction);
+            user.setCourse(course);
+        }
+        catch (Exception e){
+            throw new DataNotFoundException("user doest not exist");
+        }
+
+    }
+
+    @Override
+    public UserEntity myInfo(UUID id) {
+        for (UserEntity user: userRepository.findAll()){
+        if(user!=null){
+            if(user.getId().equals(id)){
+                return UserEntity.builder().build();
+            }
+        }
+        }
+        throw new DataNotFoundException("user not found");
     }
 
 

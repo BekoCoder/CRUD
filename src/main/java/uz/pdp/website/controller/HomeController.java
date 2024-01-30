@@ -24,8 +24,11 @@ public class HomeController {
         return "example";
     }
     @GetMapping("/edit_user")
-    public String update(){
+    public String edit(){
         return "edit_user";
     }
-
+    @GetMapping("/userInformation")
+    public String userInfo(){
+        return "/userInformation";
+    }
 }

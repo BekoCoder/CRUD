@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Information</title>
+    <link rel="stylesheet" href="/css/loader.css">
+</head>
+
+<body>
+<table style="width: 100%" id="customers">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Course</th>
+        <th>Group</th>
+        <th>Direction</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${myInfo.getName()}"></td>
+        <td th:text="${myInfo.getAddress()}"></td>
+        <td th:text="${myInfo.getCourse()}"></td>
+        <td th:text="${myInfo.getGroup()}"></td>
+        <td th:text="${myInfo.getDirection()}"></td>
+
+    </tbody>
+</table>
+</body>
+</html>
