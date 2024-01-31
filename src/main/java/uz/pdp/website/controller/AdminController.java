@@ -17,7 +17,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AdminController {
     private final UserService userService;
-    private final ModelMapper modelMapper;
 
 
     @GetMapping("/allUser")
@@ -35,12 +34,6 @@ public class AdminController {
         return "getAll";
     }
 
-//    @GetMapping("/update/{id}")
-//    public String edit(@PathVariable(value = "id") UUID id, Model model){
-//        UserEntity user = userService.getbyId(id);
-//        model.addAttribute("users", user);
-//        return "getAll";
-//    }
 
     @PostMapping("/update")
     public String update(@RequestParam("id") UUID id,
