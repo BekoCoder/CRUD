@@ -84,12 +84,13 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void updateUserInfo(String address, String direction, int course, UUID id) {
+    public void updateUserInfo(String address, String direction,String password, UUID id) {
         UserEntity user = userRepository.findById(id).orElseThrow(() -> new DataNotFoundException("user not found"));
         try {
             user.setAddress(address);
             user.setDirection(direction);
-            user.setCourse(course);
+            user.setPassword(passwordEncoder.encode(password));
+            userRepository.save(user);
         }
         catch (Exception e){
             throw new DataNotFoundException("user doest not exist");

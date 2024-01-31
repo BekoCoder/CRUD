@@ -1,7 +1,10 @@
 package uz.pdp.website.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,14 +26,19 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute AuthDto auth) {
-        UserEntity user = userService.login(auth);
-        if(user.getUsername().equals("as")){
+    public String login(@ModelAttribute AuthDto auth, Model model) {
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        if(authentication!=null && authentication.isAuthenticated() &&  !authentication.getPrincipal().equals("anonymousUser")){
+            UserEntity user = userService.login(auth);
             return "/example";
         }
         else {
-            return "/admin";
+            model.addAttribute("message", "User Not Found");
+            return "/example";
         }
+
+
+
 
     }
 

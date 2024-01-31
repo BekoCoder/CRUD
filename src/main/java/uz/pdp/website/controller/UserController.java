@@ -29,17 +29,17 @@ public class UserController {
     private final UserService userService;
     private  final UserRepository userRepository;
 
-    @PostMapping("/Info")
+    @PostMapping("/updateInfo")
     public String userInfo(@RequestParam("id")UUID id,
                            @RequestParam(value = "address") String address,
                            @RequestParam(value = "direction") String direction,
-                           @RequestParam(value = "course") int course,
+                           @RequestParam(value = "password") String  password,
                            Model model
                            ){
-        userService.updateUserInfo(address, direction, course, id);
+        userService.updateUserInfo(address, direction,password, id);
         UserEntity user = userService.getbyId(id);
-        model.addAttribute("users", user);
-        model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("myInfo", user);
+//        model.addAttribute("users", userService.getAllUsers());
         return "userInformation";
 
     }

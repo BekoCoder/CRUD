@@ -15,7 +15,7 @@
         <th>Course</th>
         <th>Group</th>
         <th>Direction</th>
-
+        <th>Update Information</th>
     </tr>
     </thead>
     <tbody>
@@ -25,7 +25,15 @@
         <td th:text="${myInfo.getCourse()}"></td>
         <td th:text="${myInfo.getGroup()}"></td>
         <td th:text="${myInfo.getDirection()}"></td>
-
+            <td>
+                <form th:action="@{/user/updateInfo}" method="post">
+                    <input type="hidden" th:name="id" th:value="${myInfo.getId()}"/>
+                    <input type="text" name="address" placeholder="address" required>
+                    <input type="text" name="direction" placeholder="direction" required>
+                    <input type="password" name="password" placeholder="password" required>
+                    <button type="submit">SUBMIT</button>
+                </form>
+            </td>
     </tbody>
 </table>
 </body>
