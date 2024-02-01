@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
@@ -232,10 +232,13 @@
         <div class="form-container">
             <img src="https://raw.githubusercontent.com/hicodersofficial/glassmorphism-login-form/master/assets/illustration.png" alt="illustration" class="illustration" />
             <h1 class="opacity">LOGIN</h1>
-            <form action="/auth/login" method="post">
+            <form th:action="@{/auth/login}" method="post">
                 <input type="text" name="username" placeholder="username" />
                 <input type="password" name="password" placeholder="password" />
                 <button class="opacity">SUBMIT</button>
+                <div th:if="${trans}">
+                    <h4 th:text="${trans}" />
+                </div>
             </form>
             <div class="register-forget opacity">
                 <a href="/auth/register">REGISTER</a>

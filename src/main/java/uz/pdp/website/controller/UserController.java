@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.repository.query.Param;
@@ -30,6 +31,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -76,25 +78,47 @@ public class UserController {
             String wordFileName=userInfo.getName()+".docx";
             model.addAttribute("myInfo", userInfo);
             model.addAttribute("wordFileName", wordFileName);
+            model.addAttribute("message", "File downloaded successfully");
             return "userInformation";
 
         }
         else {
-            model.addAttribute("message", "user not found");
+            model.addAttribute("warning", "File failed to load");
             return "userInformation";
         }
     }
 
-    @GetMapping("/download/{fileName}")
-    @ResponseBody
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
-        // Fayl nomini tekshirib oling
-        Path filePath = Paths.get("your-file-directory", fileName);
-        Resource resource = (Resource) new FileSystemResource(filePath.toFile());
+//    @GetMapping(path = "/download/{name}")
+//    public ResponseEntity<Resource> download(@PathVariable("name") String name, Model model) throws IOException {
+//        File file = new File( name);
+//        Path path = Paths.get(file.getAbsolutePath());
+//        ByteArrayResource resource = new ByteArrayResource
+//                (Files.readAllBytes(path));
+//            model.addAttribute("file", file);
+//        return ResponseEntity.ok().headers(this.headers(name))
+//                .contentLength(file.length())
+//                .contentType(MediaType.parseMediaType
+//                        ("application/octet-stream")).body((Resource) resource);
+//    }
+//    @GetMapping("/download/{username}")
+//    public String downloadUserInfo(@PathVariable String username, Model model){
+//
+//    }
 
-        // Faylni yuklash uchun ResponseEntity qaytarish
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.name() + "\"")
-                .body(resource);
-    }
+
+
+
+
+//    private HttpHeaders headers(String name) {
+//
+//        HttpHeaders header = new HttpHeaders();
+//        header.add(HttpHeaders.CONTENT_DISPOSITION,
+//                "attachment; filename=" + name);
+//        header.add("Cache-Control", "no-cache, no-store,"
+//                + " must-revalidate");
+//        header.add("Pragma", "no-cache");
+//        header.add("Expires", "0");
+//        return header;
+//
+//    }
 }

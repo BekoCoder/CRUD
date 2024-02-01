@@ -30,11 +30,13 @@ public class AuthController {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         if(authentication!=null && authentication.isAuthenticated() &&  !authentication.getPrincipal().equals("anonymousUser")){
             UserEntity user = userService.login(auth);
-            return "/example";
+            model.addAttribute("user", user);
+            model.addAttribute("trans", "Succesfully enter");
+            return "/login";
         }
         else {
-            model.addAttribute("message", "User Not Found");
-            return "/example";
+            model.addAttribute("sms", "User Not Found");
+            return "/login";
         }
 
 

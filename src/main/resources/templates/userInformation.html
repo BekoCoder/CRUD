@@ -35,10 +35,14 @@
                 </form>
                 <form th:action="@{/user/getMyInfo}" method="post">
                     <button type="submit">Export to Word</button>
+                    <div th:if="${message}">
+                        <h4 th:text="${message}" />
+                    </div>
                 </form>
-                <div th:if="${wordFileName}">
-                    <button type="submit">Download</button>
-                </div>
+<!--                <a th:href="@{/user/download}">-->
+<!--                    <input type="hidden" th:name="id" th:value="${wordFileName.ge}" />-->
+<!--                    <button type="button" class="btn btn-success btn-sm">Download</button>-->
+<!--                </a>-->
             </td>
     </tbody>
 </table>

@@ -133,7 +133,9 @@ public class UserServiceImp implements UserService {
         run.setText("Course: " + course);
         run.addBreak();
         run.setText("Role: " + roles);
-        try (FileOutputStream out = new FileOutputStream("user_info.docx")) {
+        try  {
+            String filePath="C:\\Users\\user\\Desktop\\"+name+".docx";
+            FileOutputStream out = new FileOutputStream(filePath);
             document.write(out);
         } catch (IOException e) {
             throw new RuntimeException(e);
