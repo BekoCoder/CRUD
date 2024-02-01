@@ -33,6 +33,12 @@
                     <input type="password" name="password" placeholder="password" required>
                     <button type="submit">SUBMIT</button>
                 </form>
+                <form th:action="@{/user/getMyInfo}" method="post">
+                    <button type="submit">Export to Word</button>
+                </form>
+                <div th:if="${wordFileName}">
+                    <button type="submit">Download</button>
+                </div>
             </td>
     </tbody>
 </table>

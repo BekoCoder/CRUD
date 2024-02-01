@@ -132,9 +132,6 @@
                 <input type="hidden" th:name="id" th:value="${user.getId()}" />
                 <button type="submit" style="font-size:20px"><i class="fa fa-trash-o"></i></button>
             </form>
-<!--            <a href="/edit_user">-->
-<!--                <button class="menu-btn" >UPDATE</button>-->
-<!--            </a>-->
             <form  th:action="@{/admin/update}" method="post">
                 <input type="hidden" th:name="id" th:value="${user.getId()}" />
                 <input type="text" name="username" placeholder="username" required>
