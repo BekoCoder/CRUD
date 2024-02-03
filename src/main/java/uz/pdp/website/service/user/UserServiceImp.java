@@ -116,27 +116,28 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void getMyInfoWithWord(String name, String username, String password, String address, String direction, List<Role> roles, int course) {
+    public void getMyInfoWithWord(String fileName, UserEntity userEntity) {
         XWPFDocument document = new XWPFDocument();
         XWPFParagraph paragraph = document.createParagraph();
         XWPFRun run = paragraph.createRun();
-        run.setText("Username: " + username);
+        run.setText("Username: " + userEntity.getUsername());
         run.addBreak();
-        run.setText("Name: " + name);
+        run.setText("Name: " + userEntity.getName());
         run.addBreak();
-        run.setText("Address: " + address);
+        run.setText("Address: " + userEntity.getAddress());
         run.addBreak();
-        run.setText("Direction: " +direction);
+        run.setText("Direction: " +userEntity.getDirection());
         run.addBreak();
-        run.setText("Password: " +password);
+        run.setText("Password: " +userEntity.getPassword());
         run.addBreak();
-        run.setText("Course: " + course);
+        run.setText("Course: " + userEntity.getCourse());
         run.addBreak();
-        run.setText("Role: " + roles);
+        run.setText("Role: " + userEntity.getUserRoles());
         try  {
-            String filePath="C:\\Users\\user\\Desktop\\"+name+".docx";
-            FileOutputStream out = new FileOutputStream(filePath);
+            String filePath="C:\\Users\\user\\IdeaProjects\\WebSite\\src\\main\\resources\\static\\"+fileName+".docx";
+            FileOutputStream out=new FileOutputStream(filePath);
             document.write(out);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

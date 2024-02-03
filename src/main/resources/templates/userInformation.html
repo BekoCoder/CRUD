@@ -34,17 +34,20 @@
                     <button type="submit">SUBMIT</button>
                 </form>
                 <form th:action="@{/user/getMyInfo}" method="post">
-                    <button type="submit">Export to Word</button>
-                    <div th:if="${message}">
-                        <h4 th:text="${message}" />
-                    </div>
+                    <button type="submit">
+                        <i class="fa fa-download">Export to Word</i>
+                    </button>
                 </form>
-<!--                <a th:href="@{/user/download}">-->
-<!--                    <input type="hidden" th:name="id" th:value="${wordFileName.ge}" />-->
-<!--                    <button type="button" class="btn btn-success btn-sm">Download</button>-->
-<!--                </a>-->
+                <div th:if="${wordFileName}">
+                    <!-- Word faylini yuklab olish tugmasi -->
+                    <a th:href="@{'/user/download/' + ${wordFileName}}" class="btn btn-primary" role="button" download="user_info.docx">Download Info</a>
+                </div>
+
             </td>
     </tbody>
 </table>
 </body>
 </html>
+<div th:if="${message}">
+    <h4 th:text="${message}" />
+</div>

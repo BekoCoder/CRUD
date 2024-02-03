@@ -1,12 +1,12 @@
 package uz.pdp.website.controller;
 
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.repository.query.Param;
@@ -24,8 +24,9 @@ import uz.pdp.website.dto.request.UserRequestDto;
 import uz.pdp.website.entity.UserEntity;
 import uz.pdp.website.repository.UserRepository;
 import uz.pdp.website.service.AuthService;
+import uz.pdp.website.service.user.FileServiceImpl;
 import uz.pdp.website.service.user.UserService;
-
+import org.springframework.core.io.Resource;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -46,6 +47,8 @@ import java.util.stream.Collectors;
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
+    private final FileServiceImpl fileService;
+
 
     @PostMapping("/updateInfo")
     public String userInfo(@RequestParam("id") UUID id,
@@ -74,8 +77,8 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated() && !authentication.getPrincipal().equals("anonymousUser")) {
             UserEntity userInfo = (UserEntity) authentication.getPrincipal();
-            userService.getMyInfoWithWord(userInfo.getName(), userInfo.getUsername(), userInfo.getPassword(), userInfo.getAddress(), userInfo.getDirection(), userInfo.getUserRoles(), userInfo.getCourse());
-            String wordFileName=userInfo.getName()+".docx";
+            userService.getMyInfoWithWord("user_info",userInfo);
+            String wordFileName="user_info.docx";
             model.addAttribute("myInfo", userInfo);
             model.addAttribute("wordFileName", wordFileName);
             model.addAttribute("message", "File downloaded successfully");
@@ -88,37 +91,17 @@ public class UserController {
         }
     }
 
-//    @GetMapping(path = "/download/{name}")
-//    public ResponseEntity<Resource> download(@PathVariable("name") String name, Model model) throws IOException {
-//        File file = new File( name);
-//        Path path = Paths.get(file.getAbsolutePath());
-//        ByteArrayResource resource = new ByteArrayResource
-//                (Files.readAllBytes(path));
-//            model.addAttribute("file", file);
-//        return ResponseEntity.ok().headers(this.headers(name))
-//                .contentLength(file.length())
-//                .contentType(MediaType.parseMediaType
-//                        ("application/octet-stream")).body((Resource) resource);
-//    }
-//    @GetMapping("/download/{username}")
-//    public String downloadUserInfo(@PathVariable String username, Model model){
-//
-//    }
+
+    @GetMapping("/download/{fileName}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletResponse response, Model model) throws IOException {
+        // Fayl yo'lini olish, masalan, FileServiceImpl orqali
+        String filePath = "src/main/resources/static/" + fileName; // Sizning kerakli yo'lnga moslashtiring
+        Resource resource = fileService.loadFileAsResource(filePath);
+        // Faylni ko'chirib olish uchun Response
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
 
 
-
-
-
-//    private HttpHeaders headers(String name) {
-//
-//        HttpHeaders header = new HttpHeaders();
-//        header.add(HttpHeaders.CONTENT_DISPOSITION,
-//                "attachment; filename=" + name);
-//        header.add("Cache-Control", "no-cache, no-store,"
-//                + " must-revalidate");
-//        header.add("Pragma", "no-cache");
-//        header.add("Expires", "0");
-//        return header;
-//
-//    }
 }
