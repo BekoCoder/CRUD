@@ -12,10 +12,10 @@
 <label for="active" class="close"></label>
 <div class="wrapper">
     <ul>
-        <li><a href="#">Home</a></li>
+        <li><a href="/example">Home</a></li>
         <li sec:authorize="hasRole('ADMIN')"><a href="/admin/allUser">Users</a></li>
         <li sec:authorize="hasRole('USER')"><a href="/user/myInfo">Information</a></li>
-        <li><a href="#">Feedback</a></li>
+        <li><a href="/feedback">Feedback</a></li>
         <li><a href="/auth/login">Logout</a></li>
     </ul>
 </div>

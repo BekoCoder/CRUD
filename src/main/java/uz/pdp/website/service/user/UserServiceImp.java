@@ -143,5 +143,13 @@ public class UserServiceImp implements UserService {
         }
     }
 
+    @Override
+    public List<UserEntity> getAllUsersExceptCurrent(UserEntity currentUser) {
+        List<UserEntity> allUsers = userRepository.findAll();
+        allUsers.remove(currentUser);
+        return allUsers;
+
+    }
+
 
 }

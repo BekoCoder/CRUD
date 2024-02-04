@@ -31,4 +31,10 @@ public class HomeController {
     public String userInfo(){
         return "/userInformation";
     }
+
+    @GetMapping("/feedback")
+    public String feedback(){
+        return "/feedback";
+    }
+
 }

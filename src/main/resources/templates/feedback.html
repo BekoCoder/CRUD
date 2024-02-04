@@ -1,0 +1,43 @@
+<!-- chat.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <!-- CSS va JS lar yoziladi -->
+</head>
+<body>
+<!-- Header joylashadi -->
+
+
+<div id="chat-container">
+    <!-- O'ng tomondagi foydalanuvchilar ro'yxati -->
+    <div id="user-list" class="col-md-3">
+        <h2>Users</h2>
+        <ul>
+            <li th:each="user : ${allUsers}">
+                <a th:href="@{/conversation/loadChatMessages}" th:onclick="'loadChatMessages(' + ${user.getId()} + ')'" th:text="${user.getName()}"></a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Chat joylashadi -->
+    <div id="chat-box" class="col-md-9">
+        <h2>Chat with <span th:text="${recipient.getName()}"></span></h2>
+        <div id="chat-messages" th:fragment="chatMessages">
+            <!-- Chat xabarlari AJAX yordamida yuklanadi -->
+        </div>
+        <form id="chat-form" th:action="@{/sendChatMessage}" th:object="${chatMessage}" method="post">
+            <input type="hidden" th:field="*{recipient.getId()}" th:value="${recipient.getId()}"/>
+            <textarea th:field="*{message}" placeholder="Type your message"></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</div>
+
+<!-- Footer joylashadi -->
+<!--<div th:replace="fragments/footer :: footer"></div>-->
+
+<!-- JavaScript va AJAX lar yoziladi -->
+</body>
+</html>

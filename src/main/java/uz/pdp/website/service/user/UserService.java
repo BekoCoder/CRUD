@@ -16,5 +16,6 @@ public interface UserService extends BaseService<UserEntity, UserRequestDto> {
     void updateUserInfo(String address, String direction,String password, UUID id);
     UserEntity myInfo(UUID id);
     void getMyInfoWithWord(String fileName, UserEntity userEntity);
+    List<UserEntity> getAllUsersExceptCurrent(UserEntity currentUser);
 
 }
