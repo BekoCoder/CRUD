@@ -15,8 +15,10 @@
         <li><a href="/example">Home</a></li>
         <li sec:authorize="hasRole('ADMIN')"><a href="/admin/allUser">Users</a></li>
         <li sec:authorize="hasRole('USER')"><a href="/user/myInfo">Information</a></li>
-        <li><a href="/feedback">Feedback</a></li>
+        <li sec:authorize="hasRole('USER')"><a href="/feedback">Feedback</a></li>
+        <li sec:authorize="hasRole('ADMIN')"><a href="/message/getAllMessage">Problems</a></li>
         <li><a href="/auth/login">Logout</a></li>
+
     </ul>
 </div>
 <div class="content">

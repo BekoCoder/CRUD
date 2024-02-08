@@ -1,4 +1,4 @@
-package uz.pdp.website.service.user;
+package uz.pdp.website.service.file;
 
 import org.springframework.core.io.Resource;
 import uz.pdp.website.entity.UserEntity;

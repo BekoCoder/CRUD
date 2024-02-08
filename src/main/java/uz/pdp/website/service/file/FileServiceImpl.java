@@ -1,25 +1,19 @@
-package uz.pdp.website.service.user;
+package uz.pdp.website.service.file;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import uz.pdp.website.entity.UserEntity;
+import uz.pdp.website.service.file.FileService;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class FileServiceImpl implements FileService{
+public class FileServiceImpl implements FileService {
 
 
     @Override

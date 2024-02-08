@@ -47,5 +47,4 @@ public class AdminController {
             return "getAll";
 
     }
-
 }

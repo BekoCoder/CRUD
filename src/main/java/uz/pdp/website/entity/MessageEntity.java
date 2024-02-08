@@ -11,19 +11,15 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ChatMessage {
+public class MessageEntity {
     @Id
     @GeneratedValue
     private UUID id;
 
-    @ManyToOne
     @JoinColumn(name = "sender_id")
-    private UserEntity sender;
+    private UUID senderId;
 
 
-    @ManyToOne
-    @JoinColumn(name = "recipient_id")
-    private UserEntity recipient;
 
     private String message;
 

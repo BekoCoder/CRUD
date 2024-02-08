@@ -36,5 +36,8 @@ public class HomeController {
     public String feedback(){
         return "/feedback";
     }
-
+    @GetMapping("/problems")
+    public String problems(){
+        return "/problems";
+    }
 }
