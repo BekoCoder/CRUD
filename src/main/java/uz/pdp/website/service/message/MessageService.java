@@ -8,6 +8,6 @@ import java.util.UUID;
 
 public interface MessageService {
     List<MessageEntity> getAllMessage();
-    MessageEntity create(String text, UUID userId);
+    MessageEntity create(String text, UUID userId, String name);
 
 }

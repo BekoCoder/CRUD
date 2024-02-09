@@ -22,10 +22,11 @@ public class MessageServiceImpl implements MessageService{
     }
 
     @Override
-    public MessageEntity create(String text, UUID uuid) {
+    public MessageEntity create(String text, UUID uuid, String name) {
         MessageEntity map = modelMapper.map(text, MessageEntity.class);
         map.setMessage(text);
         map.setSenderId(uuid);
+        map.setSenderName(name);
         return  messageRepository.save(map);
     }
 }

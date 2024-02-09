@@ -19,6 +19,7 @@ public class MessageEntity {
     @JoinColumn(name = "sender_id")
     private UUID senderId;
 
+    private String senderName;
 
 
     private String message;

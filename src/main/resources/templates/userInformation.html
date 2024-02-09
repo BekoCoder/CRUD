@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Information</title>
+    <link rel="stylesheet" href="/css/loader.css">
+</head>
+
+<body>
+<table style="width: 100%" id="customers">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Course</th>
+        <th>Group</th>
+        <th>Direction</th>
+        <th>Update Information</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${myInfo.getName()}"></td>
+        <td th:text="${myInfo.getAddress()}"></td>
+        <td th:text="${myInfo.getCourse()}"></td>
+        <td th:text="${myInfo.getGroup()}"></td>
+        <td th:text="${myInfo.getDirection()}"></td>
+        <td>
+            <form th:action="@{/user/updateInfo}" method="post">
+                <input type="hidden" th:name="id" th:value="${myInfo.getId()}"/>
+                <input type="text" name="address" placeholder="address" required>
+                <input type="text" name="direction" placeholder="direction" required>
+                <input type="password" name="password" placeholder="password" required>
+                <button type="submit">SUBMIT</button>
+            </form>
+            <form th:action="@{/user/getMyInfo}" method="post">
+                <button type="submit">
+                    <i class="fa fa-download">Export to Word</i>
+                </button>
+            </form>
+            <div th:if="${wordFileName}">
+                <!-- Word faylini yuklab olish tugmasi -->
+                <a th:href="@{'/user/download/' + ${wordFileName}}" class="btn btn-primary" role="button" download="user_info.docx">Download Info</a>
+            </div>
+
+        </td>
+    </tbody>
+</table>
+</body>
+</html>
+<div th:if="${message}">
+    <h4 th:text="${message}" />
+</div>
