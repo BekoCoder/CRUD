@@ -236,10 +236,11 @@
                 <input type="text" name="username" placeholder="username" />
                 <input type="password" name="password" placeholder="password" />
                 <button class="opacity">SUBMIT</button>
-                <div th:if="${trans}">
-                    <h4 th:text="${trans}" />
-                </div>
             </form>
+            <!--/*@thymesVar id="exception" type="uz.pdp.website.config.WebSiteExceptionHandler"*/-->
+            <div th:if="${exception!=null}">
+                <p>Xatolik</p>
+            </div>
             <div class="register-forget opacity">
                 <a href="/auth/register">REGISTER</a>
             </div>

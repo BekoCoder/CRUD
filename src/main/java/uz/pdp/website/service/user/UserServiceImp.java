@@ -1,6 +1,7 @@
 package uz.pdp.website.service.user;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -11,9 +12,11 @@ import uz.pdp.website.dto.request.AuthDto;
 import uz.pdp.website.dto.request.UserRequestDto;
 import uz.pdp.website.entity.UserEntity;
 import uz.pdp.website.entity.enums.Role;
+import uz.pdp.website.exception.AlreadyExistsException;
 import uz.pdp.website.exception.DataNotFoundException;
 import uz.pdp.website.repository.UserRepository;
 
+import java.awt.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,7 +64,7 @@ public class UserServiceImp implements UserService {
     @Override
     public UserEntity login(AuthDto auth) {
         UserEntity userEntity = userRepository.findByUsername(auth.getUsername())
-                .orElseThrow(() -> new DataNotFoundException("user not found"));
+                .orElseThrow(() -> new DataNotFoundException("user or password incorrect"));
         if (passwordEncoder.matches(auth.getPassword(), userEntity.getPassword())) {
             return userEntity;
         }
@@ -89,12 +92,17 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void updateUserInfo(String address, String direction,String password, UUID id) {
+    public void updateUserInfo(String address, String direction,String password, UUID id, String  jshshir,
+                               String placeofBirth, String dateofBirth, String nationality) {
         UserEntity user = userRepository.findById(id).orElseThrow(() -> new DataNotFoundException("user not found"));
         try {
             user.setAddress(address);
             user.setDirection(direction);
             user.setPassword(passwordEncoder.encode(password));
+            user.setJshshir(jshshir);
+            user.setDateOfBirth(dateofBirth);
+            user.setPlaceOfBirth(placeofBirth);
+            user.setNationality(nationality);
             userRepository.save(user);
         }
         catch (Exception e){
@@ -119,20 +127,78 @@ public class UserServiceImp implements UserService {
     public void getMyInfoWithWord(String fileName, UserEntity userEntity) {
         XWPFDocument document = new XWPFDocument();
         XWPFParagraph paragraph = document.createParagraph();
+        XWPFParagraph paragraph1 = document.createParagraph();
+        XWPFParagraph paragraph2 = document.createParagraph();
+        XWPFParagraph paragraph3 = document.createParagraph();
+        XWPFParagraph paragraph4 = document.createParagraph();
+        XWPFParagraph paragraph5 = document.createParagraph();
         XWPFRun run = paragraph.createRun();
-        run.setText("Username: " + userEntity.getUsername());
+        XWPFRun run1 = paragraph.createRun();
+        run.setText("MA'LUMOTNOMA");
+        run.setFontSize(28);
+        run.setBold(true);
+        run.setFontFamily("Times New Roman");
         run.addBreak();
-        run.setText("Name: " + userEntity.getName());
-        run.addBreak();
-        run.setText("Address: " + userEntity.getAddress());
-        run.addBreak();
-        run.setText("Direction: " +userEntity.getDirection());
-        run.addBreak();
-        run.setText("Password: " +userEntity.getPassword());
-        run.addBreak();
-        run.setText("Course: " + userEntity.getCourse());
-        run.addBreak();
-        run.setText("Role: " + userEntity.getUserRoles());
+        run1.setText(userEntity.getName());
+        run1.setFontSize(25);
+        run1.setFontFamily("Times New Roman");
+        run1.addBreak();
+        run1.addBreak();
+        run1.addBreak();
+        paragraph.setAlignment(ParagraphAlignment.CENTER);// -> Ma'lumotnoma uchun
+
+
+
+        XWPFRun run2 = paragraph1.createRun();
+        XWPFRun run3 = paragraph1.createRun();
+        run2.setText("JSHSHIR:");
+        run2.setFontSize(15);
+        run2.setBold(true);
+        run2.addBreak();
+        run3.setText(userEntity.getJshshir());
+        run3.setFontSize(13);
+        paragraph1.setAlignment(ParagraphAlignment.LEFT); // -> Jshshir uchun
+
+        XWPFRun run4 = paragraph2.createRun();
+        XWPFRun run5 = paragraph2.createRun();
+        run4.setText("Tug'ilgan yili:");
+        run4.setFontSize(15);
+        run4.setBold(true);
+        run4.addBreak();
+        run5.setText(userEntity.getDateOfBirth());
+        run5.setFontSize(13);
+        paragraph2.setAlignment(ParagraphAlignment.LEFT); // -> tug'ilgan yili uchun
+
+        XWPFRun run6 = paragraph3.createRun();
+        XWPFRun run7 = paragraph3.createRun();
+        run6.setText("Millati:");
+        run6.setFontSize(15);
+        run6.setBold(true);
+        run6.addBreak();
+        run7.setText(userEntity.getNationality());
+        run7.setFontSize(13);
+        paragraph3.setAlignment(ParagraphAlignment.LEFT); // -> millati uchun
+
+        XWPFRun run8 = paragraph4.createRun();
+        XWPFRun run9 = paragraph4.createRun();
+        run8.setText("Tug'ilgan joyi:");
+        run8.setFontSize(15);
+        run8.setBold(true);
+        run8.addBreak();
+        run9.setText(userEntity.getPlaceOfBirth());
+        run9.setFontSize(13);
+        paragraph4.setAlignment(ParagraphAlignment.RIGHT); // -> tug'ilgan joyi uchun
+
+        XWPFRun run10 = paragraph5.createRun();
+        XWPFRun run11 = paragraph5.createRun();
+        run10.setText("Yo'nalishi:");
+        run10.setFontSize(15);
+        run10.setBold(true);
+        run10.addBreak();
+        run11.setText(userEntity.getDirection());
+        run11.setFontSize(13);
+        paragraph5.setAlignment(ParagraphAlignment.END); // -> yo'nalishi uchun
+
         try  {
             String filePath="C:\\Users\\user\\IdeaProjects\\WebSite\\src\\main\\resources\\static\\"+fileName+".docx";
             FileOutputStream out=new FileOutputStream(filePath);

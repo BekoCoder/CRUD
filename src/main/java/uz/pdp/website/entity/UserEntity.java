@@ -1,5 +1,6 @@
 package uz.pdp.website.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -26,6 +27,10 @@ public class UserEntity extends BaseEntity implements UserDetails {
     private String address;
     private String direction;
     private int  course;
+    private String dateOfBirth;
+    private String nationality;
+    private String  Jshshir;
+    private String placeOfBirth;
     @Enumerated(value = EnumType.STRING)
     private List<Role> userRoles;
     @ManyToOne

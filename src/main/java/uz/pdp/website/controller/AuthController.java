@@ -32,11 +32,11 @@ public class AuthController {
             UserEntity user = userService.login(auth);
             model.addAttribute("user", user);
             model.addAttribute("trans", "Succesfully enter");
-            return "/login";
+            return "login";
         }
         else {
             model.addAttribute("sms", "User Not Found");
-            return "/login";
+            return "login";
         }
 
 
@@ -48,7 +48,6 @@ public class AuthController {
     public String registerPage() {
         return "register";
     }
-
 
     @PostMapping("/register")
     public String register(@ModelAttribute UserRequestDto requestDto) {

@@ -15,6 +15,10 @@
         <th>Course</th>
         <th>Group</th>
         <th>Direction</th>
+        <th>Nationality</th>
+        <th>Place of Birth</th>
+        <th>Date of Birth</th>
+        <th>Jshshir</th>
         <th>Update Information</th>
     </tr>
     </thead>
@@ -25,12 +29,21 @@
         <td th:text="${myInfo.getCourse()}"></td>
         <td th:text="${myInfo.getGroup()}"></td>
         <td th:text="${myInfo.getDirection()}"></td>
+        <td th:text="${myInfo.getNationality()}"></td>
+        <td th:text="${myInfo.getPlaceOfBirth()}"></td>
+        <td th:text="${myInfo.getDateOfBirth()}"></td>
+        <td th:text="${myInfo.getJshshir()}"></td>
+
         <td>
             <form th:action="@{/user/updateInfo}" method="post">
                 <input type="hidden" th:name="id" th:value="${myInfo.getId()}"/>
                 <input type="text" name="address" placeholder="address" required>
                 <input type="text" name="direction" placeholder="direction" required>
                 <input type="password" name="password" placeholder="password" required>
+                <input type="text" name="nationality" placeholder="nationality" required>
+                <input type="text" name="placeOfBirth" placeholder="PlaceOfBirth" required>
+                <input type="text" name="dateOfBirth" placeholder="DateOfBirth" required>
+                <input type="text" name="jshshir" placeholder="Jshshir" required>
                 <button type="submit">SUBMIT</button>
             </form>
             <form th:action="@{/user/getMyInfo}" method="post">

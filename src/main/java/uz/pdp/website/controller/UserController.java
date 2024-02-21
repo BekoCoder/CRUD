@@ -2,6 +2,7 @@ package uz.pdp.website.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -9,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import uz.pdp.website.entity.UserEntity;
 import uz.pdp.website.repository.UserRepository;
 import uz.pdp.website.service.file.FileServiceImpl;
@@ -16,6 +18,7 @@ import uz.pdp.website.service.user.UserService;
 import org.springframework.core.io.Resource;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -32,9 +35,13 @@ public class UserController {
                            @RequestParam(value = "address") String address,
                            @RequestParam(value = "direction") String direction,
                            @RequestParam(value = "password") String password,
+                           @RequestParam(value = "jshshir") String jshshir,
+                           @RequestParam(value = "placeOfBirth") String placeofBirth,
+                           @RequestParam(value = "dateOfBirth") String dateOfBirth,
+                           @RequestParam(value = "nationality") String nationality,
                            Model model
     ) {
-        userService.updateUserInfo(address, direction, password, id);
+        userService.updateUserInfo(address, direction, password, id, jshshir, placeofBirth, dateOfBirth, nationality);
         UserEntity user = userService.getbyId(id);
         model.addAttribute("myInfo", user);
 //        model.addAttribute("users", userService.getAllUsers());

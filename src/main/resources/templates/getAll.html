@@ -107,8 +107,82 @@
     .example-label:hover {
         background-color: #3c669f;
     }
+    .modal-header label {
+        /* Qalinlik */
+        border-left: 1px solid #dddddd;
+        /* Matn rangi */
+        color: #4d4d4d;
+        /* Matn o'lchami */
+        font-size: 16px;
+        /* Ustiga bosish holatida */
+        margin-top: 10px;
+        /* Kursor holati */
+        cursor: pointer;
+        /* Yuqori va pastga bosish efekti */
+        transition: opacity 0.3s;
+    }
 
+    .modal-header label:hover img {
+        /* Hover holatida o'zgaruvchi oqim rangi */
+        opacity: 0.6;
+    }
+    button {
+        /* Yashil rang */
+        background-color: #4CAF50;
+        /* Matn rangi */
+        color: white;
+        /* Butunlik */
+        padding: 8px 12px; /* Kichikroq qilindi */
+        /* Matn o'lchami */
+        font-size: 12px;
+        /* Ustiga bosish holatida */
+        margin-top: 5px; /* Kichikroq qilindi */
+        /* Qalinlik */
+        border: none;
+        /* Kursor holati */
+        cursor: pointer;
+        /* Yuqori va pastga bosish efekti */
+        transition: background-color 0.3s;
+    }
 
+    button:hover {
+        /* Hover holatida o'zgaruvchi rang */
+        background-color: #45a049;
+    }
+    .modal-background {
+        /* Qalinlik */
+        background-color: rgba(0,0,0,0.5); /* Oqim rangi va pastga surish */
+        /* O'rqa fon va ko'rinadigan chiziq */
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: none;
+        z-index: 9998;
+    }
+
+    .modal {
+        /* Modal o'lchami va qalinligi */
+        width: 300px;
+        height: 300px;
+        /* Modalning o'rqa fon rangi */
+        background-color: #fff;
+        /* Modalning o'rqa fon va ko'rinadigan chiziq */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        display: none;
+        box-sizing: border-box;
+        z-index: 9999;
+    }
+    body {
+        background-color: #f2f2f2; /* Orqa fon rangi */
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
 </style>
 
 <body>
@@ -130,22 +204,18 @@
         <td>
             <form th:action="@{/admin/delete}" >
                 <input type="hidden" th:name="id" th:value="${user.getId()}" />
-                <button type="submit" style="font-size:20px"><i class="fa fa-trash-o"></i></button>
+                <button type="submit" style="font-size:16px"><i class="fa fa-trash-o"></i></button>
             </form>
             <form  th:action="@{/admin/update}" method="post">
                 <input type="hidden" th:name="id" th:value="${user.getId()}" />
-                <input type="text" name="username" placeholder="username" required>
-                <input type="password" name="password" placeholder="password" required>
-                <button type="submit">SUBMIT</button>
+                <input type="text" name="username" placeholder="Username" required style="margin-bottom: 5px;">
+                <input type="password" name="password" placeholder="Password" required style="margin-bottom: 5px;">
+                <button type="submit">Save</button>
             </form>
 
         </td>
     </tr>
     </tbody>
 </table>
-
-
-
-
 </body>
 </html>

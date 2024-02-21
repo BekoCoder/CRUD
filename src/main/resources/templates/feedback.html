@@ -4,11 +4,64 @@
     <meta charset="UTF-8">
     <title>Feedback</title>
 </head>
+<style>
+    /* CSS */
+    body {
+        background-color: #f2f2f2; /* Orqa fon rangi */
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 20px auto; /* Vertikal joylashish */
+        background-color: #fff;
+        padding: 40px 20px; /* Yuqori va pastdagi paddinglarni o'zgartiring */
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        color: #007bff; /* Kichikroq rang */
+        text-align: center;
+        margin-bottom: 40px; /* pastdagi joylashishni o'zgartiring */
+        font-size: 24px; /* Matn o'lchamini o'zgartiring */
+    }
+
+    textarea {
+        width: calc(100% - 22px); /* 22px = 10px (padding) + 2px (border) + 10px (padding) */
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #4CAF50; /* Yashil rang */
+        border: none;
+        color: white;
+        padding: 12px 24px; /* O'lchamlarni o'zgartiring */
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 18px; /* Matn o'lchamini o'zgartiring */
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #45a049; /* Yashil rang (hover holatida) */
+    }
+</style>
 <body>
 <h2>Qanday muammo tug'ilyapti???
     Iltimos muammongizni batafsil yozing</h2>
 <form th:action="@{/message/saveMessage}" method="post">
-    <textarea  name="text" rows="4" cols="50" placeholder="Muammoni yozing"></textarea>
+    <textarea  name="text" rows="4" cols="50" placeholder="Muammoni yozing" required></textarea>
     <button>Submit</button>
 
 </form>
