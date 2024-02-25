@@ -1,7 +1,9 @@
 package uz.pdp.website.controller;
 
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import uz.pdp.website.entity.ImageEntity;
 import uz.pdp.website.entity.UserEntity;
 import uz.pdp.website.repository.UserRepository;
 import uz.pdp.website.service.file.FileServiceImpl;
+import uz.pdp.website.service.image.ImageService;
 import uz.pdp.website.service.user.UserService;
 import org.springframework.core.io.Resource;
 
@@ -28,7 +32,8 @@ public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
     private final FileServiceImpl fileService;
-
+    private final ModelMapper modelMapper;
+    private final ImageService imageService;
 
     @PostMapping("/updateInfo")
     public String userInfo(@RequestParam("id") UUID id,
@@ -44,7 +49,6 @@ public class UserController {
         userService.updateUserInfo(address, direction, password, id, jshshir, placeofBirth, dateOfBirth, nationality);
         UserEntity user = userService.getbyId(id);
         model.addAttribute("myInfo", user);
-//        model.addAttribute("users", userService.getAllUsers());
         return "userInformation";
 
     }
@@ -74,6 +78,58 @@ public class UserController {
             return "userInformation";
         }
     }
+    @GetMapping("/image")
+    public void image(@Param(value = "id") Long id, HttpServletResponse response,Optional<ImageEntity> image) throws IOException {
+        image= imageService.findImageById(id);
+        response.setContentType("image/jpeg, image/jpg, image/png, image/gif, image/pdf");
+        response.getOutputStream().write(image.get().getContent());
+        response.getOutputStream().close();
+    }
+
+    @PostMapping("/upload")
+    public String fileUpload(@RequestParam("file") MultipartFile file, Model model, Authentication authentication) {
+       UserEntity user=(UserEntity) authentication.getPrincipal();
+        if (file.isEmpty()) {
+            model.addAttribute("error", "Please select a file to upload.");
+            return "pictures";
+        }
+
+        try {
+            ImageEntity imageEntity = new ImageEntity();
+            String filename = file.getOriginalFilename();
+            imageEntity.setProfilePicture(filename);
+            imageEntity.setContent(file.getBytes());
+            imageEntity.setSize(file.getSize());
+            imageEntity.setUserId(user.getId());
+            imageService.create(imageEntity);
+
+            model.addAttribute("success", "File uploaded successfully!");
+            model.addAttribute("list", imageService.getAllImage());
+            model.addAttribute("user", user);
+        } catch (IOException e) {
+            model.addAttribute("error", "Error uploading the file. Please try again.");
+        }
+
+        return "pictures";
+    }
+
+    @GetMapping("/downloadFile")
+    public void downloadFile(@Param("id") Long id , Model model, HttpServletResponse response) throws IOException {
+        Optional<ImageEntity> imageById = imageService.findImageById(id);
+        if(imageById.isPresent()){
+            ImageEntity image = imageById.get();
+            response.setContentType("application/octet-stream");
+            String headerKey = "Content-Disposition";
+            String headerValue = "attachment; filename = "+image.getProfilePicture();
+            response.setHeader(headerKey, headerValue);
+            ServletOutputStream outputStream = response.getOutputStream();
+            outputStream.write(image.getContent());
+            outputStream.close();
+        }
+    }
+
+
+
 
 
     @GetMapping("/download/{fileName}")

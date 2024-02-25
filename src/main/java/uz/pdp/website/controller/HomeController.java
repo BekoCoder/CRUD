@@ -15,9 +15,9 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/pictures")
     public String menu() {
-        return "admin";
+        return "pictures";
     }
     @GetMapping("/example")
     public String ex(){

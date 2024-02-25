@@ -1,10 +1,7 @@
 package uz.pdp.website.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,6 +10,7 @@ import uz.pdp.website.entity.enums.Role;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Entity(name = "users")
 @Getter

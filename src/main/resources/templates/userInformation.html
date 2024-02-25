@@ -46,6 +46,11 @@
                 <input type="text" name="jshshir" placeholder="Jshshir" required>
                 <button type="submit">SUBMIT</button>
             </form>
+            <a href="/pictures">
+                Upload Image
+            </a>
+
+
             <form th:action="@{/user/getMyInfo}" method="post">
                 <button type="submit">
                     <i class="fa fa-download">Export to Word</i>
@@ -62,5 +67,5 @@
 </body>
 </html>
 <div th:if="${message}">
-    <h4 th:text="${message}" />
+    <h4 th:text="${message}"></h4>
 </div>
