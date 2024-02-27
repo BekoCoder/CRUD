@@ -22,6 +22,7 @@ import uz.pdp.website.service.user.UserService;
 import org.springframework.core.io.Resource;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -78,6 +79,14 @@ public class UserController {
             return "userInformation";
         }
     }
+    @GetMapping("/getMyImage")
+    public String getMyImage(Model model, Authentication authentication){
+        UserEntity user=(UserEntity) authentication.getPrincipal();
+        model.addAttribute("image", imageService.getAllImage());
+        model.addAttribute("user", user);
+        return "pictures";
+    }
+
     @GetMapping("/image")
     public void image(@Param(value = "id") Long id, HttpServletResponse response,Optional<ImageEntity> image) throws IOException {
         image= imageService.findImageById(id);
@@ -87,7 +96,7 @@ public class UserController {
     }
 
     @PostMapping("/upload")
-    public String fileUpload(@RequestParam("file") MultipartFile file, Model model, Authentication authentication) {
+    public String fileUpload(@RequestParam("file") MultipartFile file, Model model, Authentication authentication, ImageEntity imageEntity) {
        UserEntity user=(UserEntity) authentication.getPrincipal();
         if (file.isEmpty()) {
             model.addAttribute("error", "Please select a file to upload.");
@@ -95,7 +104,6 @@ public class UserController {
         }
 
         try {
-            ImageEntity imageEntity = new ImageEntity();
             String filename = file.getOriginalFilename();
             imageEntity.setProfilePicture(filename);
             imageEntity.setContent(file.getBytes());
@@ -135,7 +143,7 @@ public class UserController {
     @GetMapping("/download/{fileName}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletResponse response, Model model) throws IOException {
         // Fayl yo'lini olish, masalan, FileServiceImpl orqali
-        String filePath = "src/main/resources/static/" + fileName; // Sizning kerakli yo'lnga moslashtiring
+        String filePath = "src/main/resources/static/" + fileName; // Fayl joylashgan manzil
         Resource resource = fileService.loadFileAsResource(filePath);
         // Faylni ko'chirib olish uchun Response
         return ResponseEntity.ok()

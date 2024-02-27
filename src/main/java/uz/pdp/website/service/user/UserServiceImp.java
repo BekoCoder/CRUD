@@ -1,10 +1,7 @@
 package uz.pdp.website.service.user;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -146,9 +143,6 @@ public class UserServiceImp implements UserService {
         run1.addBreak();
         run1.addBreak();
         paragraph.setAlignment(ParagraphAlignment.CENTER);// -> Ma'lumotnoma uchun
-
-
-
         XWPFRun run2 = paragraph1.createRun();
         XWPFRun run3 = paragraph1.createRun();
         run2.setText("JSHSHIR:");
