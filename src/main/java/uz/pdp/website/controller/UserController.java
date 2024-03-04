@@ -65,7 +65,8 @@ public class UserController {
     public String getInfo(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated() && !authentication.getPrincipal().equals("anonymousUser")) {
-            UserEntity userInfo = (UserEntity) authentication.getPrincipal();
+            UUID id = ((UserEntity) authentication.getPrincipal()).getId();
+            UserEntity userInfo = userService.getbyId(id);
             userService.getMyInfoWithWord("user_info",userInfo);
             String wordFileName="user_info.docx";
             model.addAttribute("myInfo", userInfo);
