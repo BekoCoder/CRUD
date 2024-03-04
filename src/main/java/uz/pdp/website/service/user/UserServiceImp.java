@@ -16,6 +16,7 @@ import uz.pdp.website.repository.UserRepository;
 import java.awt.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -194,7 +195,7 @@ public class UserServiceImp implements UserService {
         paragraph5.setAlignment(ParagraphAlignment.END); // -> yo'nalishi uchun
 
         try  {
-            String filePath="C:\\Users\\user\\IdeaProjects\\WebSite\\src\\main\\resources\\static\\"+fileName+".docx";
+            String filePath="src\\main\\resources\\static\\"+ UUID.randomUUID().toString() +".docx";
             FileOutputStream out=new FileOutputStream(filePath);
             document.write(out);
 
