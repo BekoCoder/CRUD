@@ -22,9 +22,7 @@ import uz.pdp.website.service.user.UserService;
 import org.springframework.core.io.Resource;
 
 import java.io.IOException;
-import java.util.Base64;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @RequestMapping("/user")
@@ -83,7 +81,13 @@ public class UserController {
     @GetMapping("/getMyImage")
     public String getMyImage(Model model, Authentication authentication){
         UserEntity user=(UserEntity) authentication.getPrincipal();
-        model.addAttribute("image", imageService.getAllImage());
+        List<ImageEntity> allImages = imageService.getAllImage();
+        List<ImageEntity> userImages = new ArrayList<>();
+        for (int i = 0; i < allImages.size(); i++) {
+            if(user.getId().equals(allImages.get(i).getUserId()))
+                userImages.add(allImages.get(i));
+        }
+        model.addAttribute("image",userImages );
         model.addAttribute("user", user);
         return "pictures";
     }
@@ -113,13 +117,21 @@ public class UserController {
             imageService.create(imageEntity);
 
             model.addAttribute("success", "File uploaded successfully!");
-            model.addAttribute("list", imageService.getAllImage());
-            model.addAttribute("user", user);
+//            model.addAttribute("list", imageService.getAllImage());
+//            model.addAttribute("user", user);
         } catch (IOException e) {
             model.addAttribute("error", "Error uploading the file. Please try again.");
         }
-
+        List<ImageEntity> allImages = imageService.getAllImage();
+        List<ImageEntity> userImages = new ArrayList<>();
+        for (int i = 0; i < allImages.size(); i++) {
+            if(user.getId().equals(allImages.get(i).getUserId()))
+                userImages.add(allImages.get(i));
+        }
+        model.addAttribute("image",userImages );
+        model.addAttribute("user", user);
         return "pictures";
+
     }
 
     @GetMapping("/downloadFile")

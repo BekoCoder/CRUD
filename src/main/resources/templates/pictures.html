@@ -35,9 +35,9 @@
             <div class="card-body">
                 <div class="row">
                     <th:block th:each="studList: ${image}">
-                        <div class="col-sm-3" th:if="${studList.getUserId()==user.getId()}">
+                        <div class="col-sm-3">
                             <div>
-                                <img th:if="${studList.getProfilePicture() != null}" th:src="@{'/user/image?id=' + ${studList.getId()}}" alt="photo" width="100px" height="50px">
+                                <img  th:src="@{'/user/image?id=' + ${studList.getId()}}" alt="photo" width="100px" height="50px">
                                 <span th:unless="${studList.getProfilePicture() != null}">No Image</span>
                             </div>
                             <div th:text="${studList.getProfilePicture()}"></div>
