@@ -195,7 +195,7 @@ public class UserServiceImp implements UserService {
         paragraph5.setAlignment(ParagraphAlignment.END); // -> yo'nalishi uchun
 
         try  {
-            String filePath="src\\main\\resources\\static\\"+ fileName +".docx";
+            String filePath="C:\\Users\\user\\Desktop"+ fileName+".docx";
             FileOutputStream out=new FileOutputStream(filePath);
             document.write(out);
 
