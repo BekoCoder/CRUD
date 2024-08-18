@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>User Information</title>
@@ -58,7 +58,8 @@
             </form>
             <div th:if="${wordFileName}">
                 <!-- Word faylini yuklab olish tugmasi -->
-                <a th:href="@{'/user/download/' + ${wordFileName}}" class="btn btn-primary" role="button" download="user_info.docx">Download Info</a>
+                <a th:href="@{'/user/download/' + ${wordFileName}}" class="btn btn-primary" role="button"
+                   download="user_info.docx">Download Info</a>
             </div>
 
         </td>

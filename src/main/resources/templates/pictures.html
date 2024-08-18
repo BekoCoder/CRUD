@@ -24,7 +24,7 @@
             <h6 class="text-success" th:text="${success}"></h6>
             <div class="mb-3">
                 <form th:action="@{/user/upload}" method="post" enctype="multipart/form-data">
-                    <input class="form-control" name="file" type="file" id="formFile"><br />
+                    <input class="form-control" name="file" type="file" id="formFile"><br/>
                     <input type="submit" value="Upload" class="btn btn-warning">
                 </form>
             </div>
@@ -37,7 +37,8 @@
                     <th:block th:each="studList: ${image}">
                         <div class="col-sm-3">
                             <div>
-                                <img  th:src="@{'/user/image?id=' + ${studList.getId()}}" alt="photo" width="100px" height="50px">
+                                <img th:src="@{'/user/image?id=' + ${studList.getId()}}" alt="photo" width="100px"
+                                     height="50px">
                                 <span th:unless="${studList.getProfilePicture() != null}">No Image</span>
                             </div>
                             <div th:text="${studList.getProfilePicture()}"></div>

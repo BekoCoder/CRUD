@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import uz.pdp.website.entity.MessageEntity;
-import uz.pdp.website.entity.UserEntity;
 import uz.pdp.website.repository.MessageRepository;
 
 import java.util.List;
@@ -12,12 +11,13 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class MessageServiceImpl implements MessageService{
+public class MessageServiceImpl implements MessageService {
     private final MessageRepository messageRepository;
     private final ModelMapper modelMapper;
+
     @Override
     public List<MessageEntity> getAllMessage() {
-        return  messageRepository.findAll();
+        return messageRepository.findAll();
 
     }
 
@@ -27,6 +27,6 @@ public class MessageServiceImpl implements MessageService{
         map.setMessage(text);
         map.setSenderId(uuid);
         map.setSenderName(name);
-        return  messageRepository.save(map);
+        return messageRepository.save(map);
     }
 }

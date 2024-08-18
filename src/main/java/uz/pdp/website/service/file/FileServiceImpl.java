@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import uz.pdp.website.service.file.FileService;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -34,5 +33,5 @@ public class FileServiceImpl implements FileService {
     }
 
 
-    }
+}
 

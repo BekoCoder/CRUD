@@ -4,6 +4,7 @@ import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.core.io.Resource;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,12 @@ import uz.pdp.website.repository.UserRepository;
 import uz.pdp.website.service.file.FileServiceImpl;
 import uz.pdp.website.service.image.ImageService;
 import uz.pdp.website.service.user.UserService;
-import org.springframework.core.io.Resource;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/user")
@@ -65,36 +68,36 @@ public class UserController {
         if (authentication != null && authentication.isAuthenticated() && !authentication.getPrincipal().equals("anonymousUser")) {
             UUID id = ((UserEntity) authentication.getPrincipal()).getId();
             UserEntity userInfo = userService.getbyId(id);
-            userService.getMyInfoWithWord("user_info",userInfo);
-            String wordFileName="user_info.docx";
+            userService.getMyInfoWithWord("user_info", userInfo);
+            String wordFileName = "user_info.docx";
             model.addAttribute("myInfo", userInfo);
             model.addAttribute("wordFileName", wordFileName);
             model.addAttribute("message", "File downloaded successfully");
             return "userInformation";
 
-        }
-        else {
+        } else {
             model.addAttribute("warning", "File failed to load");
             return "userInformation";
         }
     }
+
     @GetMapping("/getMyImage")
-    public String getMyImage(Model model, Authentication authentication){
-        UserEntity user=(UserEntity) authentication.getPrincipal();
+    public String getMyImage(Model model, Authentication authentication) {
+        UserEntity user = (UserEntity) authentication.getPrincipal();
         List<ImageEntity> allImages = imageService.getAllImage();
         List<ImageEntity> userImages = new ArrayList<>();
         for (int i = 0; i < allImages.size(); i++) {
-            if(user.getId().equals(allImages.get(i).getUserId()))
+            if (user.getId().equals(allImages.get(i).getUserId()))
                 userImages.add(allImages.get(i));
         }
-        model.addAttribute("image",userImages );
+        model.addAttribute("image", userImages);
         model.addAttribute("user", user);
         return "pictures";
     }
 
     @GetMapping("/image")
-    public void image(@Param(value = "id") Long id, HttpServletResponse response,Optional<ImageEntity> image) throws IOException {
-        image= imageService.findImageById(id);
+    public void image(@Param(value = "id") Long id, HttpServletResponse response, Optional<ImageEntity> image) throws IOException {
+        image = imageService.findImageById(id);
         response.setContentType("image/jpeg, image/jpg, image/png, image/gif, image/pdf");
         response.getOutputStream().write(image.get().getContent());
         response.getOutputStream().close();
@@ -102,7 +105,7 @@ public class UserController {
 
     @PostMapping("/upload")
     public String fileUpload(@RequestParam("file") MultipartFile file, Model model, Authentication authentication, ImageEntity imageEntity) {
-       UserEntity user=(UserEntity) authentication.getPrincipal();
+        UserEntity user = (UserEntity) authentication.getPrincipal();
         if (file.isEmpty()) {
             model.addAttribute("error", "Please select a file to upload.");
             return "pictures";
@@ -125,32 +128,29 @@ public class UserController {
         List<ImageEntity> allImages = imageService.getAllImage();
         List<ImageEntity> userImages = new ArrayList<>();
         for (int i = 0; i < allImages.size(); i++) {
-            if(user.getId().equals(allImages.get(i).getUserId()))
+            if (user.getId().equals(allImages.get(i).getUserId()))
                 userImages.add(allImages.get(i));
         }
-        model.addAttribute("image",userImages );
+        model.addAttribute("image", userImages);
         model.addAttribute("user", user);
         return "pictures";
 
     }
 
     @GetMapping("/downloadFile")
-    public void downloadFile(@Param("id") Long id , Model model, HttpServletResponse response) throws IOException {
+    public void downloadFile(@Param("id") Long id, Model model, HttpServletResponse response) throws IOException {
         Optional<ImageEntity> imageById = imageService.findImageById(id);
-        if(imageById.isPresent()){
+        if (imageById.isPresent()) {
             ImageEntity image = imageById.get();
             response.setContentType("application/octet-stream");
             String headerKey = "Content-Disposition";
-            String headerValue = "attachment; filename = "+image.getProfilePicture();
+            String headerValue = "attachment; filename = " + image.getProfilePicture();
             response.setHeader(headerKey, headerValue);
             ServletOutputStream outputStream = response.getOutputStream();
             outputStream.write(image.getContent());
             outputStream.close();
         }
     }
-
-
-
 
 
     @GetMapping("/download/{fileName}")

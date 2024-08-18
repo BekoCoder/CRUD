@@ -22,7 +22,7 @@
     body {
         margin: 0;
         box-sizing: border-box;
-        font-family: "poppins",serif;
+        font-family: "poppins", serif;
         background: var(--background);
         color: var(--color);
         letter-spacing: 1px;
@@ -53,6 +53,7 @@
         position: relative;
         width: 22.2rem;
     }
+
     .form-container {
         border: 1px solid hsla(0, 0%, 65%, 0.158);
         box-shadow: 0 0 36px 1px rgba(0, 0, 0, 0.2);
@@ -172,6 +173,7 @@
         display: flex;
         justify-content: space-between;
     }
+
     .opacity {
         opacity: 0.6;
     }
@@ -227,12 +229,13 @@
     <div class="login-container">
         <div class="circle circle-one"></div>
         <div class="form-container">
-            <img src="https://raw.githubusercontent.com/hicodersofficial/glassmorphism-login-form/master/assets/illustration.png" alt="illustration" class="illustration" />
+            <img src="https://raw.githubusercontent.com/hicodersofficial/glassmorphism-login-form/master/assets/illustration.png"
+                 alt="illustration" class="illustration"/>
             <h1 class="opacity">REGISTER</h1>
             <form action="/auth/register" method="post">
                 <input type="text" name="name" placeholder="name" required>
                 <input type="text" name="username" placeholder="username" required/>
-                <input type="password" name="password" placeholder="password" required />
+                <input type="password" name="password" placeholder="password" required/>
                 <button class="opacity">SUBMIT</button>
             </form>
             <div class="register-forget opacity">

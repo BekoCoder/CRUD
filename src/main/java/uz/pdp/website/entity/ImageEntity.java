@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.util.UUID;
 
-@Entity(name="images")
+@Entity(name = "images")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,7 +17,7 @@ public class ImageEntity {
     private long id;
     private String profilePicture;
     private long size;
-    private byte [] content;
+    private byte[] content;
     @JoinColumn(name = "user_id")
     private UUID userId;
 }

@@ -14,17 +14,17 @@ import java.util.UUID;
 @MappedSuperclass
 @Setter
 @Getter
-public abstract class  BaseEntity {
+public abstract class BaseEntity {
 
     @Id
     @GeneratedValue
     protected UUID id;
 
-     @CreationTimestamp
+    @CreationTimestamp
     protected LocalDateTime createDate;
 
-     @UpdateTimestamp
-     protected LocalDateTime updateDate;
+    @UpdateTimestamp
+    protected LocalDateTime updateDate;
 
 
 }

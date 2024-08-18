@@ -1,11 +1,14 @@
 package uz.pdp.website.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import lombok.*;
 
 import java.util.UUID;
 
-@Entity(name="messages")
+@Entity(name = "messages")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,7 +26,6 @@ public class MessageEntity {
 
 
     private String message;
-
 
 
 }

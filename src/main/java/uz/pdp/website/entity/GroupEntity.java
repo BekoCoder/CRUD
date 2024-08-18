@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.SecondaryRow;
 
 import java.util.List;
 
@@ -15,13 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "groups")
-public class GroupEntity  extends BaseEntity{
-        private String groupName;
+public class GroupEntity extends BaseEntity {
+    private String groupName;
 
-        @OneToMany(mappedBy = "group")
-        private List<UserEntity> users;
-
-
+    @OneToMany(mappedBy = "group")
+    private List<UserEntity> users;
 
 
 }

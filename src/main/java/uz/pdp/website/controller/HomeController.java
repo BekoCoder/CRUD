@@ -19,25 +19,29 @@ public class HomeController {
     public String menu() {
         return "pictures";
     }
+
     @GetMapping("/example")
-    public String ex(){
+    public String ex() {
         return "example";
     }
+
     @GetMapping("/edit_user")
-    public String edit(){
+    public String edit() {
         return "edit_user";
     }
+
     @GetMapping("/userInformation")
-    public String userInfo(){
+    public String userInfo() {
         return "/userInformation";
     }
 
     @GetMapping("/feedback")
-    public String feedback(){
+    public String feedback() {
         return "feedback";
     }
+
     @GetMapping("/problems")
-    public String problems(){
+    public String problems() {
         return "/problems";
     }
 }

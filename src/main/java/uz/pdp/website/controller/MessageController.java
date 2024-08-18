@@ -18,20 +18,17 @@ public class MessageController {
     private final MessageService messageService;
 
     @GetMapping("/getAllMessage")
-    public String getAllMessage(Model model){
+    public String getAllMessage(Model model) {
         model.addAttribute("allMessage", messageService.getAllMessage());
         return "problems";
     }
 
     @PostMapping("/saveMessage")
-    public String saveMessage(@RequestParam(name = "text") String text, Model model, Authentication authentication){
-        UserEntity user= (UserEntity) authentication.getPrincipal();
-         messageService.create(text, user.getId(), user.getName());
-         return "feedback";
+    public String saveMessage(@RequestParam(name = "text") String text, Model model, Authentication authentication) {
+        UserEntity user = (UserEntity) authentication.getPrincipal();
+        messageService.create(text, user.getId(), user.getName());
+        return "feedback";
     }
-
-
-
 
 
 }

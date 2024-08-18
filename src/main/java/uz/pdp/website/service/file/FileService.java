@@ -1,9 +1,7 @@
 package uz.pdp.website.service.file;
 
 import org.springframework.core.io.Resource;
-import uz.pdp.website.entity.UserEntity;
 
-import java.io.File;
 import java.io.IOException;
 
 public interface FileService {

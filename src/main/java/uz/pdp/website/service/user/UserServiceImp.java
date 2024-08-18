@@ -1,7 +1,10 @@
 package uz.pdp.website.service.user;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.poi.xwpf.usermodel.*;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,17 +12,12 @@ import uz.pdp.website.dto.request.AuthDto;
 import uz.pdp.website.dto.request.UserRequestDto;
 import uz.pdp.website.entity.UserEntity;
 import uz.pdp.website.entity.enums.Role;
-import uz.pdp.website.exception.AlreadyExistsException;
 import uz.pdp.website.exception.DataNotFoundException;
 import uz.pdp.website.repository.UserRepository;
 
-import java.awt.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -35,7 +33,6 @@ public class UserServiceImp implements UserService {
     }
 
 
-
     @Override
     public UserEntity create(UserRequestDto userRequestDto) {
         UserEntity userEntity = modelMapper.map(userRequestDto, UserEntity.class);
@@ -46,12 +43,11 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UserEntity getbyId(UUID id) {
-            if(userRepository.findById(id).isPresent()){
-                return userRepository.findById(id).get();
-            }
-            else {
-                throw new DataNotFoundException("user not found");
-            }
+        if (userRepository.findById(id).isPresent()) {
+            return userRepository.findById(id).get();
+        } else {
+            throw new DataNotFoundException("user not found");
+        }
     }
 
     @Override
@@ -70,27 +66,25 @@ public class UserServiceImp implements UserService {
     }
 
 
-
     @Override
     public void update(UserRequestDto dto) {
         UserEntity map = modelMapper.map(dto, UserEntity.class);
         userRepository.save(map);
     }
 
-    public void update(String username, String password, UUID id){
+    public void update(String username, String password, UUID id) {
         UserEntity user = userRepository.findById(id).orElseThrow(() -> new DataNotFoundException("user not found"));
         try {
             user.setUsername(username);
             user.setPassword(passwordEncoder.encode(password));
             userRepository.save(user);
-        }
-        catch (Exception e){
-        throw new DataNotFoundException("user does not exist");
+        } catch (Exception e) {
+            throw new DataNotFoundException("user does not exist");
         }
     }
 
     @Override
-    public void updateUserInfo(String address, String direction,String password, UUID id, String  jshshir,
+    public void updateUserInfo(String address, String direction, String password, UUID id, String jshshir,
                                String placeofBirth, String dateofBirth, String nationality) {
         UserEntity user = userRepository.findById(id).orElseThrow(() -> new DataNotFoundException("user not found"));
         try {
@@ -102,8 +96,7 @@ public class UserServiceImp implements UserService {
             user.setPlaceOfBirth(placeofBirth);
             user.setNationality(nationality);
             userRepository.save(user);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new DataNotFoundException("user doest not exist");
         }
 
@@ -111,12 +104,12 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UserEntity myInfo(UUID id) {
-        for (UserEntity user: userRepository.findAll()){
-        if(user!=null){
-            if(user.getId().equals(id)){
-                return UserEntity.builder().build();
+        for (UserEntity user : userRepository.findAll()) {
+            if (user != null) {
+                if (user.getId().equals(id)) {
+                    return UserEntity.builder().build();
+                }
             }
-        }
         }
         throw new DataNotFoundException("user not found");
     }
@@ -194,9 +187,9 @@ public class UserServiceImp implements UserService {
         run11.setFontSize(13);
         paragraph5.setAlignment(ParagraphAlignment.END); // -> yo'nalishi uchun
 
-        try  {
-            String filePath="C:\\Users\\user\\Desktop\\"+ fileName+".docx";
-            FileOutputStream out=new FileOutputStream(filePath);
+        try {
+            String filePath = "C:\\Users\\user\\Desktop\\" + fileName + ".docx";
+            FileOutputStream out = new FileOutputStream(filePath);
             document.write(out);
 
         } catch (IOException e) {
