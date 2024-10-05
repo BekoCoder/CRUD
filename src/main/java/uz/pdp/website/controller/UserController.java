@@ -22,6 +22,8 @@ import uz.pdp.website.service.image.ImageService;
 import uz.pdp.website.service.user.UserService;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -156,7 +158,9 @@ public class UserController {
     @GetMapping("/download/{fileName}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletResponse response, Model model) throws IOException {
         // Fayl yo'lini olish, masalan, FileServiceImpl orqali
-        String filePath = "C:\\Users\\user\\Desktop\\" + fileName; // Fayl joylashgan manzil
+        String dektopPath = System.getProperty("user.home");
+        Path desktop = Paths.get(dektopPath, "Desktop");
+        String filePath = desktop.toString() + " " + fileName; // Fayl joylashgan manzil
         Resource resource = fileService.loadFileAsResource(filePath);
         // Faylni ko'chirib olish uchun Response
         return ResponseEntity.ok()

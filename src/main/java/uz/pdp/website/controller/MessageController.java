@@ -26,7 +26,7 @@ public class MessageController {
     @PostMapping("/saveMessage")
     public String saveMessage(@RequestParam(name = "text") String text, Model model, Authentication authentication) {
         UserEntity user = (UserEntity) authentication.getPrincipal();
-        messageService.create(text, user.getId(), user.getName());
+        messageService.create(text, user.getId(), user.getUsername());
         return "feedback";
     }
 

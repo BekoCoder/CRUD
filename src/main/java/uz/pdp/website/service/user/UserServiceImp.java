@@ -17,6 +17,8 @@ import uz.pdp.website.repository.UserRepository;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -188,7 +190,10 @@ public class UserServiceImp implements UserService {
         paragraph5.setAlignment(ParagraphAlignment.END); // -> yo'nalishi uchun
 
         try {
-            String filePath = "C:\\Users\\user\\Desktop\\" + fileName + ".docx";
+            String desktopPath = System.getProperty("user.home");
+            Path desktop = Paths.get(desktopPath, "Desktop");
+
+            String filePath = desktop + " " + fileName + ".docx";
             FileOutputStream out = new FileOutputStream(filePath);
             document.write(out);
 
